@@ -28,6 +28,7 @@ homebrew_casks:
   - repository:
       owner: foestauf
       name: homebrew-tap
+      token: "{{ .Env.TAP_GITHUB_TOKEN }}"
     name: devlog
     homepage: "https://github.com/foestauf/devlog"
     description: "Local development log broker"
