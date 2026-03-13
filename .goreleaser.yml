@@ -24,15 +24,19 @@ archives:
           - zip
     name_template: "{{ .ProjectName }}_{{ .Version }}_{{ .Os }}_{{ .Arch }}"
 
-brews:
+homebrew_casks:
   - repository:
       owner: foestauf
       name: homebrew-tap
     name: devlog
     homepage: "https://github.com/foestauf/devlog"
     description: "Local development log broker"
-    install: |
-      bin.install "devlog"
+    hooks:
+      post:
+        install: |
+          if OS.mac?
+            system_command "/usr/bin/xattr", args: ["-dr", "com.apple.quarantine", "#{staged_path}/devlog"]
+          end
 
 changelog:
   filters:
