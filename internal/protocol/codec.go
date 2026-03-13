@@ -38,7 +38,9 @@ type Decoder struct {
 
 // NewDecoder creates a new Decoder that reads from r.
 func NewDecoder(r io.Reader) *Decoder {
-	return &Decoder{scanner: bufio.NewScanner(r)}
+	s := bufio.NewScanner(r)
+	s.Buffer(make([]byte, 0, 64*1024), 1024*1024)
+	return &Decoder{scanner: s}
 }
 
 // Decode reads the next newline-delimited JSON message into dest.

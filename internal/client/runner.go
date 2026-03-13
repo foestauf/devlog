@@ -114,6 +114,7 @@ func Run(ctx context.Context, service string, dataDir string, args []string) (in
 // connection breaks, lines are buffered and a reconnect is triggered.
 func scanLines(ctx context.Context, r io.Reader, w io.Writer, stream string, c *Client) {
 	scanner := bufio.NewScanner(r)
+	scanner.Buffer(make([]byte, 0, 64*1024), 1024*1024)
 	for scanner.Scan() {
 		line := scanner.Text()
 
