@@ -1,0 +1,42 @@
+version: 2
+
+builds:
+  - main: ./cmd/devlog
+    binary: devlog
+    env:
+      - CGO_ENABLED=0
+    ldflags:
+      - -s -w -X main.version={{.Version}}
+    goos:
+      - linux
+      - darwin
+      - windows
+    goarch:
+      - amd64
+      - arm64
+
+archives:
+  - formats:
+      - tar.gz
+    format_overrides:
+      - goos: windows
+        formats:
+          - zip
+    name_template: "{{ .ProjectName }}_{{ .Version }}_{{ .Os }}_{{ .Arch }}"
+
+brews:
+  - repository:
+      owner: foestauf
+      name: homebrew-tap
+    name: devlog
+    homepage: "https://github.com/foestauf/devlog"
+    description: "Local development log broker"
+    install: |
+      bin.install "devlog"
+
+changelog:
+  filters:
+    exclude:
+      - "^docs:"
+      - "^chore:"
+      - "^ci:"
