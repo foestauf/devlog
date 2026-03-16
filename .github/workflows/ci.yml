@@ -9,6 +9,9 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
     steps:
       - uses: actions/checkout@v4
 
@@ -20,7 +23,11 @@ jobs:
         run: CGO_ENABLED=0 go build -o devlog ./cmd/devlog
 
       - name: Test
-        run: go test ./...
+        run: go test -coverprofile=coverage.out ./...
 
       - name: Vet
         run: go vet ./...
+
+      - name: Upload coverage to test-lens
+        uses: foestauf/test-lens-upload@v0.4.0
+        continue-on-error: true
