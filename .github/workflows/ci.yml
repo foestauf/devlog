@@ -29,5 +29,5 @@ jobs:
         run: go vet ./...
 
       - name: Upload coverage to test-lens
-        uses: foestauf/test-lens-upload@v0.4.0
+        uses: foestauf/test-lens-upload@v0.4.1
         continue-on-error: true
