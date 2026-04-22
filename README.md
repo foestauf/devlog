@@ -8,6 +8,21 @@ DevLog sits between your dev processes and your terminal — capturing stdout/st
 
 ## Install
 
+### Homebrew (macOS and Linux)
+
+```bash
+brew install --cask foestauf/tap/devlog
+```
+
+Or, if you prefer tapping first:
+
+```bash
+brew tap foestauf/tap
+brew install --cask devlog
+```
+
+Prebuilt binaries for `darwin_amd64`, `darwin_arm64`, `linux_amd64`, and `linux_arm64` are published to the [foestauf/homebrew-tap](https://github.com/foestauf/homebrew-tap) tap on each release.
+
 ### Build from source
 
 Requires Go 1.21+ and CGO (for SQLite).
