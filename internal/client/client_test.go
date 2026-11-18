@@ -14,11 +14,12 @@ import (
 	"testing"
 
 	"github.com/foestauf/devlog/internal/protocol"
+	"github.com/foestauf/devlog/internal/testutil"
 )
 
 func TestEnsureBrokerDetectsExistingSocket(t *testing.T) {
 	// Create a temporary directory for the socket.
-	tmpDir := t.TempDir()
+	tmpDir := testutil.SocketDir(t)
 	socketPath := filepath.Join(tmpDir, "devlog.sock")
 
 	// Start a listener on the socket — acts as our fake broker.
@@ -56,7 +57,7 @@ func TestIsSocketAvailableReturnsFalseForMissingSocket(t *testing.T) {
 }
 
 func TestIsSocketAvailableReturnsTrueForLiveSocket(t *testing.T) {
-	tmpDir := t.TempDir()
+	tmpDir := testutil.SocketDir(t)
 	socketPath := filepath.Join(tmpDir, "test.sock")
 
 	listener, err := net.Listen("unix", socketPath)
@@ -161,7 +162,7 @@ func TestSignalForwardingSetupDoesNotPanic(t *testing.T) {
 }
 
 func TestClientConnectAndRegister(t *testing.T) {
-	tmpDir := t.TempDir()
+	tmpDir := testutil.SocketDir(t)
 	socketPath := filepath.Join(tmpDir, "devlog.sock")
 
 	// Spin up a fake broker that responds to session registration.

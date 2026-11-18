@@ -10,11 +10,12 @@ import (
 
 	"github.com/foestauf/devlog/internal/protocol"
 	"github.com/foestauf/devlog/internal/storage"
+	"github.com/foestauf/devlog/internal/testutil"
 )
 
 func setupBroker(t *testing.T) (*Broker, string) {
 	t.Helper()
-	dir := t.TempDir()
+	dir := testutil.SocketDir(t)
 	b, err := New(dir)
 	if err != nil {
 		t.Fatalf("New: %v", err)
@@ -384,7 +385,7 @@ func TestSessionCleanupOnDisconnect(t *testing.T) {
 }
 
 func TestCacheWarmOnRestart(t *testing.T) {
-	dir := t.TempDir()
+	dir := testutil.SocketDir(t)
 
 	// Create a broker, insert some data, stop it.
 	b1, err := New(dir)
@@ -504,7 +505,7 @@ func TestStatusQuery(t *testing.T) {
 }
 
 func TestDuplicateBrokerFailsFlock(t *testing.T) {
-	dir := t.TempDir()
+	dir := testutil.SocketDir(t)
 
 	b1, err := New(dir)
 	if err != nil {
